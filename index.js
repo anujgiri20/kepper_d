@@ -127,19 +127,19 @@ app.post("/login" , async(request,response)=>{
 
 
 //opeartions on data base
-app.post("/bank", async(request,response)=>{
+app.post("/postbank", async(request,response)=>{
     const client = await createconnections()
     const add_data = request.body
     const result = await client.db("kepper").collection("bank").insertMany(add_data)
     response.send(result)
 })
-app.get("/bank", async(request,response)=>{
+app.get("/getbank", async(request,response)=>{
     const client = await createconnections()
     const result = await client.db("kepper").collection("bank").find({}).toArray()
     response.send(result)
 
 })
-app.delete("/bank/:id" , async(request,response)=>{
+app.delete("/deletebank/:id" , async(request,response)=>{
 const id = request.params.id
 const client = await createconnections()
 const user= await client.db("kepper").collection("bank").deleteOne({_id: new mongodb.ObjectId(id)})
@@ -151,7 +151,7 @@ const user= await client.db("kepper").collection("bank").deleteOne({_id: new mon
 })
 
 
-app.put("/bank/:id", async(request, response) => {
+app.put("/updatebank/:id", async(request, response) => {
     const id = request.params.id;
     const client = await createconnections();
     const user= await client.db("kepper").collection("bank").updateOne({_id:new mongodb.ObjectId(id)},{$set:{"name":request.body.name,"money":request.body.money}})
