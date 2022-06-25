@@ -127,22 +127,22 @@ app.post("/login" , async(request,response)=>{
 
 
 //opeartions on data base
-app.post("/insertToKepper",validateToken, async(request,response)=>{
+app.post("/insertToKepper", async(request,response)=>{
     const client = await createconnections()
     const add_data = request.body
-    const result = await client.db("kepper").collection("kepper").insertMany(add_data)
+    const result = await client.db("kepper").collection("bank").insertMany(add_data)
     response.send(result)
 })
-app.get("/getFromKepper",validateToken, async(request,response)=>{
+app.get("/getFromKepper", async(request,response)=>{
     const client = await createconnections()
-    const result = await client.db("kepper").collection("kepper").find({}).toArray()
+    const result = await client.db("kepper").collection("bank").find({}).toArray()
     response.send(result)
 
 })
-app.delete("/deleteFromKepper/:id" ,validateToken, async(request,response)=>{
+app.delete("/deleteFromKepper/:id" , async(request,response)=>{
 const id = request.params.id
 const client = await createconnections()
-const user= await client.db("kepper").collection("kepper").deleteOne({_id: new mongodb.ObjectId(id)})
+const user= await client.db("kepper").collection("bank").deleteOne({_id: new mongodb.ObjectId(id)})
    console.log(id)
    console.log(user)
    response.send(user)
@@ -151,10 +151,10 @@ const user= await client.db("kepper").collection("kepper").deleteOne({_id: new m
 })
 
 
-app.put("/patchkepper/:id",validateToken, async(request, response) => {
+app.put("/patchkepper/:id", async(request, response) => {
     const id = request.params.id;
     const client = await createconnections();
-    const user= await client.db("kepper").collection("kepper").updateOne({_id:new mongodb.ObjectId(id)},{$set:{"title":request.body.title,"data":request.body.data}})
+    const user= await client.db("kepper").collection("bank").updateOne({_id:new mongodb.ObjectId(id)},{$set:{"name":request.body.name,"money":request.body.money}})
     // console.log(user)
     response.send(user)
  
